@@ -3,6 +3,14 @@ import { useState } from 'react'
 const Header = (props) => <h1>{props.header}</h1>
 
 const Statistics = ({header, stats}) => {
+  if (stats[3] <= 0) {
+    return (
+      <div>
+        <h2>{header}</h2>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
   return (
     <div>
       <h2>{header}</h2>
