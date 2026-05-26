@@ -14,17 +14,28 @@ const Statistics = ({header, stats}) => {
   return (
     <div>
       <h2>{header}</h2>
-      <StatisticLine text='good:' value={stats[0]}/>
-      <StatisticLine text='neutral:' value={stats[1]}/>
-      <StatisticLine text='bad:' value={stats[2]}/>
-      <StatisticLine text='total:' value={stats[3]}/>
-      <StatisticLine text='average:' value={stats[4]}/>
-      <StatisticLine text='positive:' value={stats[5]}/>
+      <table>
+        <tbody>
+          <StatisticLine text='good:' value={stats[0]}/>
+          <StatisticLine text='neutral:' value={stats[1]}/>
+          <StatisticLine text='bad:' value={stats[2]}/>
+          <StatisticLine text='total:' value={stats[3]}/>
+          <StatisticLine text='average:' value={stats[4]}/>
+          <StatisticLine text='positive:' value={stats[5]}/>
+        </tbody>
+      </table>
     </div>
   )
 }
 
-const StatisticLine = ({text, value}) => <p>{text} {value}</p>
+const StatisticLine = ({text, value}) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+}
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button> 
 
