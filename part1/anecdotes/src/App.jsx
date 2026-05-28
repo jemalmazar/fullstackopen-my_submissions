@@ -16,15 +16,26 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
 
-  const handleNextAnecdote = () => {
-    const randomNumber = Math.floor(Math.random() * anecdotes.length)
-    setSelected(randomNumber)
+  const handleNextAnecdoteClick = () => {
+
+      const getRandomNumber = () => {
+        const randomNumber = Math.floor(Math.random() * anecdotes.length)
+        // check if randomly generated number is same as current quote/index/state
+        if (randomNumber === selected) {
+          // if yes, rerun function to generate new random number
+          return getRandomNumber()
+        }
+        // if no, return randomly generated number
+        return randomNumber
+      }
+
+      setSelected(getRandomNumber())
   }
   
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <Button onClick={handleNextAnecdote} text='next anecdote' />
+      <Button onClick={handleNextAnecdoteClick} text='next anecdote' />
     </div>
   )
 }
