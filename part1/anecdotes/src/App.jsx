@@ -15,6 +15,13 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [upvotes, setUpvotes] = useState(Array(8).fill(0))
+
+  const handleUpvoteClick = () => {
+    const upvotesCopy = [...upvotes]
+    upvotesCopy[selected]++
+    setUpvotes(upvotesCopy) 
+  }
 
   const handleNextAnecdoteClick = () => {
 
@@ -31,10 +38,12 @@ const App = () => {
 
       setSelected(getRandomNumber())
   }
-  
+  console.log(selected, upvotes, upvotes.indexOf(Math.max(...upvotes)))
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>this 👆 anecdote has {upvotes[selected]} upvotes</p>
+      <Button onClick={handleUpvoteClick} text='upvote' />
       <Button onClick={handleNextAnecdoteClick} text='next anecdote' />
     </div>
   )
