@@ -34,19 +34,18 @@ const App = () => {
   }
 
   const handleNextAnecdoteClick = () => {
-
-      const getRandomNumber = () => {
-        const randomNumber = Math.floor(Math.random() * anecdotes.length)
-        // check if randomly generated number is same as current quote/index/state
-        if (randomNumber === selected) {
-          // if yes, rerun function to generate new random number
-          return getRandomNumber()
-        }
-        // if no, return randomly generated number
-        return randomNumber
+    // recursive function adapted from https://dev.to/albz/the-random-number-that-cried-again-and-how-to-stop-the-madness-3bif
+    const getRandomNumber = () => {
+      const randomNumber = Math.floor(Math.random() * anecdotes.length)
+      // check if randomly generated number is same as current quote/index/state
+      if (randomNumber === selected) {
+        // if yes, rerun function to generate new random number
+        return getRandomNumber()
       }
-
-      setSelected(getRandomNumber())
+      // if no, return randomly generated number
+      return randomNumber
+    }
+    setSelected(getRandomNumber())
   }
 
   return (
