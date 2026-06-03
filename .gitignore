@@ -1,5 +1,6 @@
 # Full Stack Open - My Submissions .gitignore #
 
-# Ignore examples folder #
+# Ignore examples folders #
 # =============== #
 part1/examples
+part2/examples
