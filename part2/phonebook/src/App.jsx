@@ -21,12 +21,16 @@ const App = () => {
 
   const addEntry = (event) => {
     event.preventDefault()
-    const person = {
+    const entry = {
       name: newName
     }
+    const isDuplicate = persons.find(person => person.name === newName)
 
-    setPersons(persons.concat(person))
-    setNewName('')  
+    isDuplicate
+      ? alert(`${newName} has already been added to the phonebook`)
+      : setPersons(persons.concat(entry))
+      
+    setNewName('')
   }
 
   const handleNameInputChange = (event) => {
