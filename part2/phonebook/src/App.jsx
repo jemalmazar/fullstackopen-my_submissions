@@ -1,9 +1,32 @@
 import { useState } from 'react'
 
-const Numbers = ({data}) => {
+const Phonebook = ({header, onSubmit, onChange, value}) => {
   return (
     <div>
-      <h2>Numbers</h2>
+      <h2>{header}</h2>
+      <Form onSubmit={onSubmit} value={value} onChange={onChange}/>
+    </div>
+  )
+}
+
+const Form = (props) => {
+  return (
+    <form id="entry_form" onSubmit={props.onSubmit}>
+      <div>
+        <label htmlFor="fullname">Name:</label>
+        <input type="text" id="fullname" value={props.value} onChange={props.onChange} required />
+      </div>
+      <div>
+        <button type="submit">add</button>
+      </div>
+    </form>
+  )
+}
+
+const Numbers = ({header, data}) => {
+  return (
+    <div>
+      <h2>{header}</h2>
       <ul>
         {data.map(person => <Person key={person.name} person={person}/>)}
       </ul>
@@ -39,17 +62,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form name="entry_form" onSubmit={addEntry}>
-        <div>
-          <label htmlFor="name_input">Name:</label>
-          <input name="name_input" value={newName} onChange={handleNameInputChange} required />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <Numbers data={persons}/> 
+      <Phonebook header='Phonebook' onSubmit={addEntry} onChange={handleNameInputChange} value={newName}/>
+      <Numbers header='Numbers' data={persons}/> 
     </div>
   )
 }
