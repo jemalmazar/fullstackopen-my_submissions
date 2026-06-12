@@ -1,5 +1,22 @@
 import { useState } from 'react'
 
+const Search = ({header, onChange, value}) => {
+  return (
+    <div>
+      <h2>{header}</h2>
+      <div>
+        <label htmlFor="search">Search: </label>
+        <input 
+          type="text"
+          id="search"
+          value={value}
+          onChange={onChange}
+        />
+      </div>
+    </div>
+  )
+}
+
 const Phonebook = ({header, onSubmit, onChange, value}) => {
   return (
     <div>
@@ -67,6 +84,8 @@ const App = () => {
     number: ""
   })
 
+  const [search, setSearch] = useState('')
+
   const onSubmit = (event) => {
     event.preventDefault()
     const entry = {
@@ -91,10 +110,20 @@ const App = () => {
     setNewName(previousState => ({...previousState, [id]: value}))    
   }
 
+  const handleSearchInputChange = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const displayFilter = search.length === 0
+    ? persons
+    : persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase())) 
+
   return (
     <div>
-      <Phonebook header='Phonebook' onSubmit={onSubmit} onChange={handleFormInputChange} value={newName}/>
-      <Numbers header='Numbers' data={persons}/> 
+      <h1>Phonebook</h1>
+      <Search header='Search Contacts' onChange={handleSearchInputChange} value={search} />
+      <Phonebook header='Add New' onSubmit={onSubmit} onChange={handleFormInputChange} value={newName}/>
+      <Numbers header='Numbers' data={displayFilter}/> 
     </div>
   )
 }
