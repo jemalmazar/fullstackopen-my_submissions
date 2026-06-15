@@ -1,18 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Search from './components/Search'
 import AddContact from './components/AddContact'
 import Contacts from './components/Contacts'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456" },
-    { name: "Ada Lovelace", number: "39-44-5323523" },
-    { name: "Dan Abramov", number: "12-43-234345" },
-    { name: "Mary Poppendieck", number: "39-23-6423122" }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   // initial state for adapted from https://medium.com/@amitsharma_24072/handling-multiple-inputs-in-reactjs-best-practices-for-react-js-input-forms-9b973f4beb7e
   const [newName, setNewName] = useState({ name: "",number: "" })
   const [search, setSearch] = useState("")
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
 
   const onSubmit = (e) => {
     e.preventDefault()
