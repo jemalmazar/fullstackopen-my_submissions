@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Search from './components/Search'
 import AddContact from './components/AddContact'
 import Contacts from './components/Contacts'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   // initial state for adapted from https://medium.com/@amitsharma_24072/handling-multiple-inputs-in-reactjs-best-practices-for-react-js-input-forms-9b973f4beb7e
-  const [newName, setNewName] = useState({ name: "",number: "" })
+  const [newName, setNewName] = useState({ name: "", number: "" })
   const [search, setSearch] = useState("")
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(defaultContacts => {
+        setPersons(defaultContacts)
       })
   }, [])
 
@@ -26,10 +26,10 @@ const App = () => {
 
     isDuplicate
       ? alert(`${newName.name} has already been added to the phonebook`)
-      : axios
-          .post('http://localhost:3001/persons', entry)
-          .then(response => {
-            setPersons(persons.concat(response.data))
+      : personService
+          .create(entry)
+          .then(newPerson => {
+            setPersons(persons.concat(newPerson))
           })
           
   setNewName({ name: "", number: "" })

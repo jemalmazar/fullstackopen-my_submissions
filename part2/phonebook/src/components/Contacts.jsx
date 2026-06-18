@@ -9,7 +9,7 @@ const Contacts = ({header, data, search}) => {
     <div>
       <h2>{header}</h2>
       <ul>
-        {contactsFilter.map(person => <Contact key={person.name} person={person}/>)}
+        {contactsFilter.map(person => <Contact key={person.id} person={person} />)}
       </ul>
     </div>
   )
