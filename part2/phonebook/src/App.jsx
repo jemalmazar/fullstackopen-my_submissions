@@ -26,9 +26,13 @@ const App = () => {
 
     isDuplicate
       ? alert(`${newName.name} has already been added to the phonebook`)
-      : setPersons(persons.concat(entry))
-      
-    setNewName({ name: "", number: "" })
+      : axios
+          .post('http://localhost:3001/persons', entry)
+          .then(response => {
+            setPersons(persons.concat(response.data))
+          })
+          
+  setNewName({ name: "", number: "" })
   }
 
   const handleFormInputChange = (e) => {
