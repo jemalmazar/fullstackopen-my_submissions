@@ -43,6 +43,18 @@ const App = () => {
 
   const handleSearchInputChange = (e) => setSearch(e.target.value)
 
+  const handleDeleteClick = (id) => {
+    const contact = persons.find(c => c.id === id)
+
+    window.confirm(`Delete ${contact.name} from Contacts?`) 
+      ? personService
+        .remove(id, contact)
+        .then(() => {
+          setPersons(persons.filter(c => c.id !== id))
+        })
+      : ""
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -61,6 +73,7 @@ const App = () => {
         header="Contacts"
         data={persons}
         search={search}
+        onClick={handleDeleteClick}
       /> 
     </div>
   )

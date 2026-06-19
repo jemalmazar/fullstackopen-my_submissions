@@ -1,6 +1,6 @@
 import Contact from "./Contact"
 
-const Contacts = ({header, data, search}) => {
+const Contacts = ({header, data, search, onClick}) => {
   const contactsFilter = search.length === 0
     ? data
     : data.filter(person => person.name.toLowerCase().includes(search.toLowerCase())) 
@@ -9,7 +9,7 @@ const Contacts = ({header, data, search}) => {
     <div>
       <h2>{header}</h2>
       <ul>
-        {contactsFilter.map(person => <Contact key={person.id} person={person} />)}
+        {contactsFilter.map(person => <Contact key={person.id} person={person} onClick={onClick}/>)}
       </ul>
     </div>
   )
