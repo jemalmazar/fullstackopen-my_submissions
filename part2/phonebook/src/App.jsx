@@ -24,15 +24,23 @@ const App = () => {
     const entry = { name: newName.name, number: newName.number }
     const isDuplicate = persons.find(person => person.name.toLowerCase() === newName.name.toLowerCase())
 
-    isDuplicate
-      ? alert(`${newName.name} has already been added to the phonebook`)
-      : personService
+    isDuplicate && window.confirm(`${newName.name} is already in the phonebook. Update their number?`)
+      ? personService
+          .update(isDuplicate.id, { ...isDuplicate, number: newName.number})
+          .then(updatedPerson => {
+            setPersons(persons.map(person => person.id === isDuplicate.id ? updatedPerson : person))
+          })
+      : ""
+
+    !isDuplicate
+      ? personService
           .create(entry)
           .then(newPerson => {
             setPersons(persons.concat(newPerson))
           })
+      : ""
           
-  setNewName({ name: "", number: "" })
+   setNewName({ name: "", number: "" })
   }
 
   const handleFormInputChange = (e) => {
