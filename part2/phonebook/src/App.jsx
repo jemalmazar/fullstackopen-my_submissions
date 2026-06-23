@@ -3,12 +3,20 @@ import Search from './components/Search'
 import AddContact from './components/AddContact'
 import Contacts from './components/Contacts'
 import personService from './services/persons'
+import Notification from './components/Notifcation'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   // initial state for adapted from https://medium.com/@amitsharma_24072/handling-multiple-inputs-in-reactjs-best-practices-for-react-js-input-forms-9b973f4beb7e
   const [newName, setNewName] = useState({ name: "", number: "" })
   const [search, setSearch] = useState("")
+  const [notification, setNotification] = useState(null)
+
+  const notificationDelay = () => {
+    setTimeout(() => {
+      setNotification(null)
+    }, 3000)
+  }
 
   useEffect(() => {
     personService
@@ -29,6 +37,13 @@ const App = () => {
           .update(isDuplicate.id, { ...isDuplicate, number: newName.number})
           .then(updatedPerson => {
             setPersons(persons.map(person => person.id === isDuplicate.id ? updatedPerson : person))
+            setNotification({ success: `Updated ${updatedPerson.name}'s phone number to 📞 ${updatedPerson.number}.` })
+            notificationDelay()
+          })
+          .catch(() => {
+            setNotification({ error: `Information on ${isDuplicate.name} has already been removed from the server.` })
+            notificationDelay()
+            setPersons(persons.filter(c => c.id !== isDuplicate.id))
           })
       : ""
 
@@ -37,6 +52,8 @@ const App = () => {
           .create(entry)
           .then(newPerson => {
             setPersons(persons.concat(newPerson))
+            setNotification({ success: `Added ${newPerson.name} to Contacts.` })
+            notificationDelay()
           })
       : ""
           
@@ -60,12 +77,20 @@ const App = () => {
         .then(() => {
           setPersons(persons.filter(c => c.id !== id))
         })
+        .catch(() => {
+          setNotification({ error: `Information on ${contact.name} has already been removed from the server.` })
+          notificationDelay()
+          setPersons(persons.filter(c => c.id !== id))
+        })
       : ""
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification
+        message={notification}
+      />
       <Search 
         header="Search Contacts"
         onChange={handleSearchInputChange}
