@@ -1,7 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import countryService from './services/countries'
 
 const App = () => {
   const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    countryService
+      .getAll()
+      .then(countries =>{
+        console.log(countries)        
+      })
+  }, [])
 
   return (
     <div>
