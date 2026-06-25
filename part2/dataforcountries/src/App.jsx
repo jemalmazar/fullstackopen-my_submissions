@@ -1,27 +1,29 @@
 import { useState, useEffect } from 'react'
+
+import Search from './components/Search'
+import Display from './components/Display'
+
 import countryService from './services/countries'
 
 const App = () => {
   const [search, setSearch] = useState('')
+  const [countries, setCountries] = useState([])
 
   useEffect(() => {
     countryService
       .getAll()
       .then(countries =>{
-        console.log(countries)        
+        setCountries(countries)       
       })
   }, [])
+
+  const handleSearchInputChange = (e) => setSearch(e.target.value)
 
   return (
     <div>
       <h1>Data for Countries</h1>
-      <form>
-        <label htmlFor="search">Search countries: </label>
-        <input
-          type="test"
-          name="search"
-        />
-      </form>
+      <Search onChange={handleSearchInputChange} value={search} />
+      <Display data={countries} search={search} />
     </div>
   )
 }
