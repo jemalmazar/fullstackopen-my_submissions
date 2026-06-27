@@ -1,6 +1,6 @@
 const Search = ({ onChange, value }) => {
   return (
-    <form>
+    <>
       <label htmlFor="search">Search countries: </label>
       <input
         type="test"
@@ -9,7 +9,7 @@ const Search = ({ onChange, value }) => {
         value={value}
         placeholder="Enter a country name"
       />
-    </form>
+    </>
   )
 }
 
