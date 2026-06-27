@@ -13,12 +13,12 @@ const Display = ({ data, search, onClick }) => {
   }
   
   if (countriesFilter.length === 1) {
-    return countriesFilter.map(country => <Country country={country} />)
+    return countriesFilter.map(country => <Country key={ country.cca3 } country={ country } />)
   }
 
   return (
     <ul className="countries">
-      {countriesFilter.map(country => <Item key={country.cca3} country={country} onClick={onClick} />)}
+      {countriesFilter.map(country => <Item key={ country.cca3 } country={ country } onClick={ onClick } />)}
     </ul>
   )
 }
