@@ -8,7 +8,7 @@ import countryService from './services/countries'
 const App = () => {
   const [search, setSearch] = useState('')
   const [countries, setCountries] = useState([])
-  const [viewClicked, setViewClicked] = useState(false)
+  const [viewClicked, setViewClicked] = useState()
 
   useEffect(() => {
     countryService
@@ -20,7 +20,7 @@ const App = () => {
 
   const handleSearchInputChange = (e) => {
     setSearch(e.target.value)
-    setViewClicked(false)
+    viewClicked ? setViewClicked(false) : ""
   }
 
   const handleViewClick = (id) => {
