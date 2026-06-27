@@ -1,7 +1,7 @@
 import Country from "./Country"
 import Item from "./Item"
 
-const Display = ({ data, search }) => {
+const Display = ({ data, search, onClick }) => {
   const countriesFilter = data.filter(country => country.name.common.toLowerCase().includes(search.toLowerCase()))
 
   if (search.length === 0) {
@@ -18,7 +18,7 @@ const Display = ({ data, search }) => {
 
   return (
     <ul className="countries">
-      {countriesFilter.map(country => <Item key={country.cca3} country={country} />)}
+      {countriesFilter.map(country => <Item key={country.cca3} country={country} onClick={onClick} />)}
     </ul>
   )
 }
