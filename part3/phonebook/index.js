@@ -42,6 +42,19 @@ app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
 
+app.get('/api/persons/:id', (request, response) => {
+  const id = request.params.id
+  const person = persons.find(note => note.id === id)
+
+  if (person) {
+    response.json(person)
+  } else {
+    response.statusMessage = `Person with id:${id} does not exist`
+    response.status(404).end()
+  }
+
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
