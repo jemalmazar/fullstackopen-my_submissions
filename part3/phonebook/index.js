@@ -35,7 +35,6 @@ app.get('/info', (request, response) => {
     <p>Phonebook has info for ${persons.length} people</p>
     <p>${requestTime}</p>  
   `)
-
 })
 
 app.get('/api/persons', (request, response) => {
@@ -52,7 +51,13 @@ app.get('/api/persons/:id', (request, response) => {
     response.statusMessage = `Person with id:${id} does not exist`
     response.status(404).end()
   }
+})
 
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
 })
 
 const PORT = 3001
