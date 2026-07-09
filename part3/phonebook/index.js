@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
     {
       "id": "1",
@@ -23,6 +25,9 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
+
+// ID generation from https://stackoverflow.com/a/19842865
+const generateRandomId = () => Math.random().toString(16).slice(2)
 
 app.get('/', (request, response) => { 
   response.send('<h1>Phonebook!</h1>')
@@ -51,6 +56,17 @@ app.get('/api/persons/:id', (request, response) => {
     response.statusMessage = `Person with id:${id} does not exist`
     response.status(404).end()
   }
+})
+
+app.post('/api/persons', (request, response) => {
+
+  const person = {
+    id: generateRandomId(),
+    name: request.body.name,
+    number: request.body.number
+  }
+
+  response.json(person)
 })
 
 app.delete('/api/persons/:id', (request, response) => {
