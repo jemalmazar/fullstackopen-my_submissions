@@ -4,7 +4,18 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-app.use(morgan('tiny'))
+// morgan format string and POST token creation from: https://stackoverflow.com/a/67254802
+app.use(morgan(
+  ':method :url :status :res[content-length] - :response-time ms :postData'
+))
+
+morgan.token('postData', (request, response) => {
+  if (request.method === 'POST') {
+    return JSON.stringify(request.body)
+  } else {
+    return " "
+  }
+})
 
 let persons = [
     {
