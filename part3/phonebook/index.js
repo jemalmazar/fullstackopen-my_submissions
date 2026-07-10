@@ -59,7 +59,12 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
+  const isDuplicate = persons.find(person => person.name.toLowerCase() === request.body.name.toLowerCase())
 
+  if (!request.body.name) return response.status(400).json({ error: "name is missing" })
+  if (!request.body.number) return response.status(400).json({ error: "number is missing" })
+  if (isDuplicate) return response.status(400).json({ error: "name must be unique" })
+  
   const person = {
     id: generateRandomId(),
     name: request.body.name,
